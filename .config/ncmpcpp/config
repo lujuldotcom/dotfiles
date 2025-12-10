@@ -1,0 +1,20 @@
+ncmpcpp_directory =          ~/.config/ncmpcpp
+lyrics_directory =           ~/.config/ncmpcpp/lyrics
+mpd_host =                   localhost
+mpd_port =                   6600
+mpd_music_dir =              ~/Music
+
+browser_display_mode =       columns
+playlist_display_mode =      columns
+search_engine_display_mode = columns
+
+user_interface =             classic
+now_playing_prefix =         $b
+now_playing_suffix =         $/b
+progressbar_look =           󰹞󰹞󰹞
+enable_window_title =        yes
+header_visibility =          yes
+
+song_window_title_format =   {%c - }{%t}|{%f}
+song_columns_list_format =   (6f)[green]{NE} (20)[]{c} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
+song_status_format =         {%a - }{%b}

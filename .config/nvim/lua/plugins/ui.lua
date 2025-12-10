@@ -1,0 +1,79 @@
+return {
+	{
+		"sainnhe/gruvbox-material",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.o.background = "dark"
+			vim.g.gruvbox_material_background = "hard"
+			vim.g.gruvbox_material_better_performance = 1
+			vim.cmd.colorscheme("gruvbox-material")
+		end,
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			local function custom_location()
+				local current_line = vim.fn.line(".")
+				local total_lines = vim.fn.line("$")
+				local col = vim.fn.col(".")
+				return string.format("%d/%d:%d", current_line, total_lines, col)
+			end
+			require("lualine").setup({
+				options = {
+					theme = "gruvbox-material",
+				},
+				sections = {
+					lualine_a = { "mode" },
+					lualine_b = { "branch", "diff", "diagnostics" },
+					lualine_c = { "filename" },
+					lualine_x = { "encoding", "fileformat", "filetype" },
+					lualine_y = { "progress" },
+					lualine_z = { custom_location },
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = { "filename" },
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = { custom_location },
+				},
+			})
+		end,
+	},
+	{
+		"akinsho/bufferline.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("bufferline").setup({})
+		end,
+	},
+	{ "lewis6991/gitsigns.nvim" },
+	{ "hiphish/rainbow-delimiters.nvim" },
+	{ "numToStr/Comment.nvim" },
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"echasnovski/mini.icons",
+		},
+		opts = {
+			-- your configuration comes here
+		},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+	},
+}

@@ -100,7 +100,7 @@ alias music='setsid st -c ncmpcpp-7 -e ncmpcpp >/dev/null 2>&1 < /dev/null && ec
 alias yt='setsid st -c yt-7 -e yt-x >/dev/null 2>&1 < /dev/null && echo "yt-x launched on tag 7"'
 
 ZSH_DIR="$(cd "$(dirname "$(realpath "${(%):-%x}")")" && pwd)"
-SCRIPTS_DIR="$ZSH_DIR/../scripts"
+SCRIPTS_DIR="$ZSH_DIR/../../scripts"
 hdmi() {
   "$SCRIPTS_DIR/hdmi.sh" "$@"
 }

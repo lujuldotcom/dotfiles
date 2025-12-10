@@ -54,9 +54,9 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets)
 set -x
 
 DOTFILES_DIR="$HOME/Projects/src/dotfiles/"
-FASTFETCH_CONFIG="$DOTFILES_DIR/fastfetch/splashscreen.jsonc"
+FASTFETCH_CONFIG="$DOTFILES_DIR/.config/fastfetch/splashscreen.jsonc"
 
-xrdb -merge "$DOTFILES_DIR/X11/Xressources"
+xrdb -merge "$DOTFILES_DIR/.config/X11/Xressources"
 xset s off -dpms
 xrandr --output eDP-1 --mode 2560x1600 --rate 60 &
 picom --vsync --backend glx &
