@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 case "$1" in
     off)
         xrandr --output HDMI-1-0 --off \
@@ -28,4 +30,4 @@ case "$1" in
         ;;
 esac
 
-~/Projects/src/dotfiles/scripts/wallpaper.sh
+"$SCRIPT_DIR"/wallpaper.sh
