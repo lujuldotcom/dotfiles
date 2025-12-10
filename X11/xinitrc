@@ -1,0 +1,82 @@
+#!/bin/sh
+
+prefix="/usr"
+exec_prefix="${prefix}"
+xrdb="xrdb"
+xinitdir="/etc/X11/xinit"
+xclock="xclock"
+xterm="xterm"
+twm="twm"
+xmodmap="xmodmap"
+
+userresources="$HOME/.Xresources"
+usermodmap="$HOME/.Xmodmap"
+sysresources="$xinitdir/.Xresources"
+sysmodmap="$xinitdir/.Xmodmap"
+
+# merge in defaults and keymaps
+
+if [ -f "$sysresources" ]; then
+  if [ -x /usr/bin/cpp ]; then
+    "$xrdb" -merge "$sysresources"
+  else
+    "$xrdb" -nocpp -merge "$sysresources"
+  fi
+fi
+
+if [ -f "$sysmodmap" ]; then
+  "$xmodmap" "$sysmodmap"
+fi
+
+if [ -f "$userresources" ]; then
+  if [ -x /usr/bin/cpp ]; then
+    "$xrdb" -merge "$userresources"
+  else
+    "$xrdb" -nocpp -merge "$userresources"
+  fi
+fi
+
+if [ -f "$usermodmap" ]; then
+  "$xmodmap" "$usermodmap"
+fi
+
+# start some nice programs
+
+if [ -d "$xinitdir"/xinitrc.d ]; then
+  for f in "$xinitdir/xinitrc.d"/?*.sh; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets)
+
+set -x
+
+DOTFILES_DIR="$HOME/Projects/src/dotfiles/"
+FASTFETCH_CONFIG="$DOTFILES_DIR/fastfetch/splashscreen.jsonc"
+
+xrdb -merge "$DOTFILES_DIR/X11/Xressources"
+xset s off -dpms
+xrandr --output eDP-1 --mode 2560x1600 --rate 60 &
+picom --vsync --backend glx &
+"$DOTFILES_DIR/scripts/wallpaper.sh" &
+xset r rate 250 40 &
+setxkbmap fr &
+numlockx &
+(
+  while true; do
+    "$DOTFILES_DIR/scripts/statusbar.sh"
+    sleep 30s
+  done
+) &
+(sleep 1 && st -n zsh-fastfetch -g 100x21 -e zsh -c \
+  "print -Pn '\e]2;Moc'\''s Computer\a'; fastfetch --config '$FASTFETCH_CONFIG'; read") &
+(sleep 1 && "$DOTFILES_DIR/scripts/statusbar.sh") &
+
+export GTK_THEME=Gruvbox-Dark
+export GTK_ICON_THEME=Gruvbox-Dark
+export GTK_FONT_NAME="DejaVu Sans 10"
+export QT_QPA_PLATFORMTHEME=qt6ct
+
+exec dwm

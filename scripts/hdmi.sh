@@ -30,4 +30,4 @@ case "$1" in
         ;;
 esac
 
-"$SCRIPT_DIR"/wallpaper.sh
+"$SCRIPT_DIR/wallpaper.sh"
