@@ -1,2 +1,1 @@
-# dotfiles
-Moc's dotfiles
+# Moc's dotfiles
