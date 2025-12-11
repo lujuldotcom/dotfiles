@@ -84,7 +84,7 @@ alias vim='nvim'
 
 alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -lh --color=auto --group-directories-first'
-alias la='ls -lha --color=auto --group-directories-first'
+alias la='ls -lha --color=auto --group-directories-first --sort=version'
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
