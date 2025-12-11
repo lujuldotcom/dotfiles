@@ -12,13 +12,18 @@ export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
 export CARGO_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
+
+export CUDA_CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache}/nvidia/ComputeCache"
 export NPM_CONFIG_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/npm"
 export YARN_CACHE_FOLDER="${XDG_CACHE_HOME:-$HOME/.cache}/yarn"
-export CUDA_CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache}/nvidia/ComputeCache"
-export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export YARN_DATA_FOLDER="${XDG_DATA_HOME:-$HOME/.local/share}/yarn"
+export YARN_GLOBAL_FOLDER="${XDG_DATA_HOME:-$HOME/.local/share}/yarn/global"
+export PATH="$YARN_GLOBAL_FOLDER/bin:$PATH"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export PATH="$GOPATH/bin:$PATH"
 export GO_NO_TELEMETRY=1
+export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+
 export LESSHISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/less/history"
 export NODE_REPL_HISTORY="${XDG_STATE_HOME:-$HOME/.local/state}/node/repl_history"
 
