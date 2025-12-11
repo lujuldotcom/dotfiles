@@ -1,17 +1,18 @@
+export VISUAL=nvim
+export EDITOR=nvim
+
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export VISUAL=nvim
-export EDITOR=nvim
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/X11/xinitrc"
 export GIT_CONFIG_GLOBAL="${XDG_CONFIG_HOME:-$HOME/.config}/git/gitconfig"
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
 export CARGO_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
-export NPM_CONFIG_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/npm/"
+export NPM_CONFIG_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/npm"
 export CUDA_CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache}/nvidia/ComputeCache"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
