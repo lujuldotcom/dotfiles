@@ -51,6 +51,7 @@ function update_git_dirty_async() {
 precmd() {
   vcs_info
   update_git_dirty_async
+  print -Pn "\e]0;%~ ${vcs_info_msg_0_} ${GIT_DIRTY_ASYNC}\a"
 }
 
 PROMPT='%F{yellow}%n%f@%F{white}%m%f %F{blue}%~%f %F{cyan}${vcs_info_msg_0_}%f %F{magenta}${GIT_DIRTY_ASYNC}%f
