@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 
 -- Navigation
-vim.keymap.set("n", "<leader>cd", vim.cmd.Ex, { desc = "Directory listing" })
+vim.keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
 vim.keymap.set("n", "<Tab>", ":bnext<CR>", { silent = true })
 vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
 vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { silent = true })
