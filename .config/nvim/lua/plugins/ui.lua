@@ -78,7 +78,6 @@ return {
 	},
 	{
 		"nvim-tree/nvim-tree.lua",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			local function my_on_attach(bufnr)
 				local api = require("nvim-tree.api")
@@ -90,7 +89,7 @@ return {
 				api.config.mappings.default_on_attach(bufnr)
 
 				vim.keymap.set("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
-				vim.keymap.set("n", "<C-)>", api.tree.change_root_to_node, opts("CD"))
+				vim.keymap.set("n", "<C-g>", api.tree.change_root_to_node, opts("CD"))
 				vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
 			end
 			require("nvim-tree").setup({
@@ -103,17 +102,28 @@ return {
 				},
 				renderer = {
 					group_empty = true,
-					root_folder_modifier = ":t",
+					root_folder_label = function(path)
+						local parts = vim.split(path, "/", { trimempty = true })
+						local depth = 3
+
+						if #parts <= depth then
+							return "/" .. table.concat(parts, "/")
+						end
+
+						return "…/" .. table.concat(vim.list_slice(parts, #parts - depth + 1), "/")
+					end,
 				},
 				filters = {
 					dotfiles = false,
 				},
 				update_focused_file = {
 					enable = true,
-					update_cwd = true,
+					update_cwd = false,
 				},
 				actions = {
-					open_file = { quit_on_open = true },
+					open_file = {
+						quit_on_open = false,
+					},
 				},
 			})
 		end,

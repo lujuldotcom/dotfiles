@@ -1,6 +1,7 @@
 vim.g.mapleader = " "
 
 -- Navigation
+vim.keymap.set("n", "<leader>o", ":wincmd w<CR>", { desc = "Switch window" })
 vim.keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
 vim.keymap.set("n", "<Tab>", ":bnext<CR>", { silent = true })
 vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { silent = true })
