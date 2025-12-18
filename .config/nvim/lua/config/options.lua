@@ -43,3 +43,7 @@ vim.opt.autoread = true
 -- Spell check
 vim.opt_local.spell = false
 vim.opt_local.spelllang = { "en", "fr" }
+
+-- :checkhealth
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
