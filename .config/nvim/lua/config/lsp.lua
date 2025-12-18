@@ -12,7 +12,6 @@ local servers = {
 	"lua_ls",
 	"gopls",
 	"pyright",
-	"ember",
 }
 
 -- Function called when the LSP client starts

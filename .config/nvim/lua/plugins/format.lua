@@ -68,7 +68,6 @@ return {
 					"lua_ls",
 					"gopls",
 					"pyright",
-					"ember",
 				},
 				automatic_installation = true,
 				automatic_enable = false,
