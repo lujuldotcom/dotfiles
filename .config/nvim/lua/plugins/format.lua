@@ -1,46 +1,67 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		branch = "master",
+		branch = "main",
 		lazy = false,
 		build = ":TSUpdate",
-		dependencies = {
-			"windwp/nvim-ts-autotag",
-		},
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = {
-					"bash",
-					"javascript",
-					"typescript",
-					"json",
-					"html",
-					"css",
-					"scss",
-					"yaml",
-					"toml",
-					"go",
-					"python",
-					"glimmer",
-					-- "c",
-					-- "lua",
-					-- "markdown",
-					-- "markdown_inline",
-					-- "query",
-					-- "vim",
-					-- "vimdoc",
-				},
-				highlight = {
-					enable = true,
-				},
-				indent = {
-					enable = true,
-				},
-				autotag = {
-					enable = true,
-				},
+			local treesitter = require("nvim-treesitter")
+
+			treesitter.setup()
+
+			treesitter.install({
+				"bash",
+				"javascript",
+				"typescript",
+				"json",
+				"html",
+				"css",
+				"scss",
+				"yaml",
+				"toml",
+				"go",
+				"python",
+				"glimmer",
+			})
+
+			vim.api.nvim_create_autocmd("FileType", {
+				group = vim.api.nvim_create_augroup("UserTreesitterStart", { clear = true }),
+				callback = function(args)
+					local ft = vim.bo[args.buf].filetype
+
+					if ft == "handlebars" then
+						return
+					end
+
+					pcall(vim.treesitter.start, args.buf)
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("FileType", {
+				group = vim.api.nvim_create_augroup("UserHandlebarsSyntax", { clear = true }),
+				pattern = "handlebars",
+				callback = function()
+					vim.cmd("syntax enable")
+					vim.cmd("setlocal syntax=html")
+				end,
 			})
 		end,
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		opts = {},
+		ft = {
+			"html",
+			"xml",
+			"javascript",
+			"typescript",
+			"javascriptreact",
+			"typescriptreact",
+			"vue",
+			"svelte",
+			"handlebars",
+			"glimmer",
+		},
 	},
 	{
 		"mason-org/mason.nvim",
