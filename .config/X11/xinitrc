@@ -79,4 +79,6 @@ export GTK_ICON_THEME=Gruvbox-Dark
 export GTK_FONT_NAME="DejaVu Sans 10"
 export QT_QPA_PLATFORMTHEME=qt6ct
 
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
 exec dwm
