@@ -1,0 +1,111 @@
+export PATH="$HOME/.local/bin:$PATH"
+
+HISTFILE=~/.local/state/zsh/history
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt append_history
+setopt inc_append_history
+setopt share_history
+setopt hist_reduce_blanks
+setopt hist_ignore_dups
+setopt hist_expire_dups_first
+
+setopt globdots
+setopt extended_glob
+setopt interactive_comments
+setopt prompt_subst
+
+# -------------------
+# START PROMPT CONFIG
+# -------------------
+
+autoload -Uz vcs_info
+setopt PROMPT_SUBST
+
+zstyle ':vcs_info:git:*' formats '󰘬 %b'
+zstyle ':vcs_info:git:*' actionformats '󰘬 %b | %a'
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' max-exports 1
+zstyle ':vcs_info:git:*' check-for-changes false
+
+GIT_DIRTY_ASYNC=""
+GIT_DIRTY_JOB=0
+
+function update_git_dirty_async() {
+  ((GIT_DIRTY_JOB > 0)) && kill $GIT_DIRTY_JOB 2>/dev/null
+
+  {
+    local dirty=""
+    if [[ -n $vcs_info_msg_0_ ]]; then
+      if git rev-parse --is-inside-work-tree &>/dev/null; then
+        git diff --quiet 2>/dev/null || dirty=1
+        git diff --cached --quiet 2>/dev/null || dirty=1
+        [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]] && dirty=1
+      fi
+    fi
+    [[ $dirty -eq 1 ]] && echo "" || echo ""
+  } | {
+    read val
+    GIT_DIRTY_ASYNC="$val"
+  }
+
+  GIT_DIRTY_JOB=$!
+}
+
+precmd() {
+  vcs_info
+  update_git_dirty_async
+  print -Pn "\e]0;%~ ${vcs_info_msg_0_} ${GIT_DIRTY_ASYNC}\a"
+}
+
+PROMPT='%F{yellow}%n%f@%F{white}%m%f %F{blue}%~%f %F{cyan}${vcs_info_msg_0_}%f %F{magenta}${GIT_DIRTY_ASYNC}%f
+ '
+
+# -------------------
+# END  PROMPT  CONFIG
+# -------------------
+
+autoload -Uz compinit
+zmodload zsh/complist
+
+if [[ ! -f ~/.config/zsh/.zcompdump ]]; then
+  compinit
+else
+  compinit -C
+fi
+
+zstyle ':completion:*' menu select
+
+# lujul completion : script versionné, chargé après compinit.
+_lujul_completion="${${(%):-%x}:A:h}/completions/_lujul"
+if (( $+commands[lujul] )) && [[ -r "$_lujul_completion" ]]; then
+  source "$_lujul_completion"
+fi
+unset _lujul_completion
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+((${+ZSH_HIGHLIGHT_STYLES})) || typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
+alias vi='nvim'
+alias vim='nvim'
+
+export LS_COLORS="di=01;94:ow=01;34;40:st=01;30;44"
+alias ls='gls --color=auto --group-directories-first'
+alias ll='gls -lh --color=auto --group-directories-first'
+alias la='gls -lha --color=auto --group-directories-first'
+
+alias grep='grep --color=always'
+alias fgrep='fgrep --color=always'
+alias egrep='egrep --color=always'
+
+alias diff='diff --color=always'
+alias tree='tree -C'
+
+eval "$(fnm env --use-on-cd --shell zsh)"
+
+export GPG_TTY=$(tty)
