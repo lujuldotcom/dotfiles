@@ -16,6 +16,8 @@ setopt extended_glob
 setopt interactive_comments
 setopt prompt_subst
 
+unsetopt BEEP
+
 # -------------------
 # START PROMPT CONFIG
 # -------------------
