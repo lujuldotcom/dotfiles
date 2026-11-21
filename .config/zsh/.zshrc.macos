@@ -111,3 +111,7 @@ alias tree='tree -C'
 eval "$(fnm env --use-on-cd --shell zsh)"
 
 export GPG_TTY=$(tty)
+
+if [[ -n ${GHOSTTY_RESOURCES_DIR:-} ]]; then
+  source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
+fi
